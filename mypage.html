@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嵌入式 | 个人网页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --dark: #1f2937;
+            --darker: #111827;
+            --light: #f3f4f6;
+            --gray: #9ca3af;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 导航栏 */
+        nav {
+            background-color: rgba(31, 41, 55, 0.95);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* 首页区域 */
+        #home {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(to bottom, var(--darker), var(--dark));
+            margin-top: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 1;
+            padding-right: 30px;
+        }
+        
+        .hero-text h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .hero-text h1 span {
+            color: var(--primary);
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+        
+        .hero-text .specialty {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 50%;
+            border: 5px solid var(--primary);
+            box-shadow: 0 0 50px rgba(37, 99, 235, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .circuit-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                linear-gradient(to right, #10b981 1px, transparent 1px),
+                linear-gradient(to bottom, #10b981 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+        
+        /* 关于我 */
+        #about {
+            background-color: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #about::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--gray);
+        }
+        
+        .about-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-item i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 技能部分 */
+        #skills {
+            background-color: var(--darker);
+            position: relative;
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .skill-category {
+            background: linear-gradient(145deg, #1a2333, #151b28);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-10px);
+        }
+        
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .skill-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .skill-header h3 {
+            font-size: 1.5rem;
+        }
+        
+        .skill-list {
+            list-style: none;
+        }
+        
+        .skill-list li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            color: var(--gray);
+        }
+        
+        .skill-list li::before {
+            content: '▹';
+            color: var(--secondary);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        /* 项目部分 */
+        #projects {
+            background-color: var(--dark);
+        }
+        
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-item {
+            background: linear-gradient(145deg, #1a2333, #151b28);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .project-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, var(--dark) 100%);
+            opacity: 0.7;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .project-item:hover .project-image img {
+            transform: scale(1.1);
+        }
+        
+        .project-info {
+            padding: 25px;
+        }
+        
+        .project-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: var(--light);
+        }
+        
+        .project-info p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-tag {
+            background-color: rgba(37, 99, 235, 0.2);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        /* 联系方式 */
+        #contact {
+            background-color: var(--darker);
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+        
+        .contact-info {
+            flex: 1;
+        }
+        
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .contact-details h3 {
+            margin-bottom: 5px;
+            color: var(--light);
+        }
+        
+        .contact-details p {
+            color: var(--gray);
+        }
+        
+        .contact-form {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background-color: rgba(31, 41, 55, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            font-size: 1rem;
+            color: var(--light);
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #0f172a;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            flex: 1;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-section p {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-content, .about-content, .contact-container {
+                flex-direction: column;
+            }
+            
+            .hero-text, .about-text, .contact-info, .contact-form {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 10px 15px;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .about-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <div class="container nav-container">
+            <a href="#" class="logo"><i class="fas fa-microchip"></i>嵌入式工程师</a>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#skills">技能</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#contact">联系我</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 首页区域 -->
+    <section id="home">
+        <div class="circuit-background"></div>
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>你好，我是<span>周航宇</span></h1>
+                <p>一名正在学习<span class="specialty">嵌入式</span>的研一新生</p>
+                <p>从0开始不断学习新的技能</p>
+                <a href="#projects" class="btn">查看我的项目</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://placehold.co/400x400/2563eb/FFFFFF?text=嵌入式\n工程师" alt="个人照片">
+            </div>
+        </div>
+    </section>
+
+    <!-- 关于我 -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>关于我</h2>
+                <p>深入了解我的背景和专业经历</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>嵌入式开发</h3>
+                    <p>我是一名专注于嵌入式系统学习的研一新生，欢迎交流</p>
+                    
+                    <div class="about-details">
+                        <div class="detail-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>计算机技术硕士</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>还未工作</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>秦皇岛, 中国</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-language"></i>
+                            <span>中文, 英语</span>
+                        </div>
+                    </div>
+                    
+                    <p>我的专业领域包括微控制器编程、实时操作系统(RTOS)、硬件接口设计、低功耗优化和嵌入式Linux开发。我喜欢学习新技术并应用于实际项目中。</p>
+                    <a href="#contact" class="btn">联系我</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://placehold.co/500x400/2563eb/FFFFFF?text=Embedded+Systems" alt="关于我">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能部分 -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2>我的技能</h2>
+                <p>我在嵌入式开发领域掌握的技术和工具</p>
+            </div>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>微控制器</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li>ARM Cortex-M系列</li>
+                        <li>STM32系列</li>
+                        <li>ESP32/ESP8266</li>
+                        <li>Arduino</li>
+                        <li>Raspberry Pi Pico</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>编程语言</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li>C/C++ (精通)</li>
+                        <li>Python</li>
+                        <li>嵌入式汇编</li>
+                        <li>Rust (学习)</li>
+                        <li>Shell脚本</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3>系统与框架</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li>FreeRTOS</li>
+                        <li>Zephyr RTOS</li>
+                        <li>嵌入式Linux</li>
+                        <li>ARM Mbed OS</li>
+                        <li>CMSIS</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-category">
+                    <div class="skill-header">
+                        <div class="skill-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>开发工具</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li>Keil MDK</li>
+                        <li>IAR Embedded Workbench</li>
+                        <li>STM32CubeIDE</li>
+                        <li>VS Code</li>
+                        <li>Git版本控制</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 项目部分 -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2>我的项目</h2>
+                <p>展示我完成的嵌入式系统项目</p>
+            </div>
+            <div class="projects-container">
+                <div class="project-item">
+                    <div class="project-image">
+                        <img src="https://placehold.co/600x400/2563eb/FFFFFF?text=智能家居系统" alt="智能家居系统">
+                    </div>
+                    <div class="project-info">
+                        <h3>智能家居控制系统</h3>
+                        <p>基于ESP32的智能家居解决方案，支持手机APP控制和语音助手集成，实现家电自动化控制。</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">ESP32</span>
+                            <span class="tech-tag">FreeRTOS</span>
+                            <span class="tech-tag">MQTT</span>
+                            <span class="tech-tag">C++</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <img src="https://placehold.co/600x400/2563eb/FFFFFF?text=工业传感器节点" alt="工业传感器节点">
+                    </div>
+                    <div class="project-info">
+                        <h3>工业物联网传感器节点</h3>
+                        <p>低功耗STM32L4传感器节点，支持多种工业传感器数据采集和LoRa无线传输，电池寿命超过2年。</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">STM32L4</span>
+                            <span class="tech-tag">LoRa</span>
+                            <span class="tech-tag">低功耗设计</span>
+                            <span class="tech-tag">C</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-item">
+                    <div class="project-image">
+                        <img src="https://placehold.co/600x400/2563eb/FFFFFF?text=机器人控制系统" alt="机器人控制系统">
+                    </div>
+                    <div class="project-info">
+                        <h3>自主导航机器人平台</h3>
+                        <p>基于ROS和STM32的机器人控制系统，实现SLAM导航、避障和路径规划功能。</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">ROS</span>
+                            <span class="tech-tag">STM32H7</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Python</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn">查看详情</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系方式 -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>联系我</h2>
+                <p>有任何项目合作或技术交流？欢迎联系我</p>
+            </div>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>邮箱</h3>
+                            <p>hang_yuzhou@qq.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>电话</h3>
+                            <p>+86 138 1234 5678</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>地址</h3>
+                            <p>河北秦皇岛市海港区河北大街438号</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>工作时间</h3>
+                            <p>周一至周五: 9:00 - 18:00</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" placeholder="您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="您的邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" placeholder="主题" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="您的消息" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">发送消息</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-section">
+                    <h3>嵌入式工程师</h3>
+                    <p>创建可靠、高效的嵌入式系统解决方案</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <p><a href="#home">首页</a></p>
+                    <p><a href="#about">关于我</a></p>
+                    <p><a href="#skills">技能</a></p>
+                    <p><a href="#projects">项目</a></p>
+                    <p><a href="#contact">联系我</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关注我</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 嵌入式 | 个人网页. 保留所有权利</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
