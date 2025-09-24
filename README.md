@@ -13,7 +13,7 @@
 ### 必需材料
 - pcb板  
   ![这是一个pcb](./picture/Cpcb.jpg)
-- pcb板上所需电子元器件    
+- pcb板上所需电子元器件      
   ![这是一个pcb](./picture/Cqijian2.jpg)
 - 显示器  
   ![这是显示器](./picture/Cmonitor.jpg)
