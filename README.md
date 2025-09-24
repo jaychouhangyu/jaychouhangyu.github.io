@@ -11,18 +11,18 @@
 
 ## 材料与工具准备
 ### 必需材料
-- pcb板
+- pcb板  
   ![这是一个pcb](./picture/Cpcb.jpg)
-- pcb板上所需电子元器件
-  ![这是电子元器件](./picture/Cqijian2.jpg)
-- 显示器
+- pcb板上所需电子元器件    
+  ![这是一个pcb](./picture/Cqijian2.jpg)
+- 显示器  
   ![这是显示器](./picture/Cmonitor.jpg)
-- 电源
+- 电源  
   ![这是电源](./picture/Cbaterry.jpg)
 ### 所需工具
--加热台
--加热管
--锡管针 
+-加热台  
+-加热管  
+-锡管针   
 
 ## 制作步骤
 
