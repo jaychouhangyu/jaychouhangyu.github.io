@@ -12,13 +12,12 @@
 ## 材料与工具准备
 ### 必需材料
 - pcb板
-![这是一个pcb](./picture/pcb.jpg)
+  ![这是一个pcb](./picture/Cpcb.jpg)
 - pcb板上所需电子元器件
-![这是电子元器件](./picture/qijian2.jpg)
+  ![这是电子元器件](./picture/Cqijian2.jpg)
 - 显示器
-![这是显示器](./picture/monitor.jpg)
+  ![这是显示器](./picture/Cmonitor.jpg)
 - 电源
-
   ![这是电源](./picture/Cbaterry.jpg)
 ### 所需工具
 -加热台
@@ -55,5 +54,5 @@
 
 ## 总结
 - 通过制作一个小指南针，我们了解了开发一个基本嵌入式硬件的入门操作。
-![指南针成品](./picture/chenpin.jpg)
+![指南针成品](./picture/Cchenpin.jpg)
 
