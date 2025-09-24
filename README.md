@@ -14,7 +14,7 @@
 - pcb板  
   ![这是一个pcb](./picture/Cpcb.jpg)
 - pcb板上所需电子元器件      
-  ![这是一个电子器件](./picture/Cqijian2.jpg)
+  ![这是一个电子器件](./picture/Cqijan2.jpg)
 - 显示器  
   ![这是显示器](./picture/Cmonitor.jpg)
 - 电源  
@@ -54,5 +54,5 @@
 
 ## 总结
 - 通过制作一个小指南针，我们了解了开发一个基本嵌入式硬件的入门操作。  
-  ![指南针成品](./picture/Cchenpin.jpg)
+  ![指南针成品](./picture/Cchengpin.jpg)
 
