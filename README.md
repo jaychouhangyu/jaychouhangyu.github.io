@@ -18,7 +18,8 @@
 - 显示器
 ![这是显示器](./picture/monitor.jpg)
 - 电源
-![这是电源](./picture/Cbaterry.jpg)
+
+  ![这是电源](./picture/Cbaterry.jpg)
 ### 所需工具
 -加热台
 -加热管
